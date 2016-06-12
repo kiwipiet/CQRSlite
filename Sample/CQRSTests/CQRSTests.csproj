@@ -63,6 +63,10 @@
       <Project>{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6}</Project>
       <Name>CQRSlite</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Framework\CQRSlite\CQRSlite.PCL.csproj">
+      <Project>{ff7b851e-c59d-4e21-b363-19f1238bf962}</Project>
+      <Name>CQRSlite.PCL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CQRSCode\CQRSCode.csproj">
       <Project>{34E7DC24-8080-4E47-90E6-3BCDA44955E5}</Project>
       <Name>CQRSCode</Name>

@@ -64,12 +64,6 @@
     <Compile Include="Substitutes\TestAggregateNoParameterLessConstructor.cs" />
     <Compile Include="Substitutes\TestEventStoreWithBugs.cs" />
     <Compile Include="Substitutes\TestInMemoryEventStore.cs" />
-    <Compile Include="Substitutes\TestInMemorySnapshotStore.cs" />
-    <Compile Include="Snapshots\When_getting_a_snapshot_aggregate_with_no_snapshot.cs" />
-    <Compile Include="Snapshots\When_getting_snapshotable_aggreate.cs" />
-    <Compile Include="Snapshots\When_getting_an_aggregate_with_snapshot.cs" />
-    <Compile Include="Snapshots\When_saving_a_snapshotable_aggregate.cs" />
-    <Compile Include="Snapshots\When_saving_a_snapshotable_aggregate_for_each_change.cs" />
     <Compile Include="Substitutes\TestEventPublisher.cs" />
     <Compile Include="Bus\When_sending_command.cs" />
     <Compile Include="Substitutes\TestEventStore.cs" />
@@ -84,13 +78,15 @@
     <Compile Include="Domain\When_getting_an_aggregate.cs" />
     <Compile Include="Substitutes\TestAggregate.cs" />
     <Compile Include="Substitutes\TestEvents.cs" />
-    <Compile Include="Substitutes\TestSnapshotAggregate.cs" />
-    <Compile Include="Substitutes\TestSnapshotStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CQRSlite\CQRSlite.csproj">
       <Project>{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6}</Project>
       <Name>CQRSlite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQRSlite\CQRSlite.PCL.csproj">
+      <Project>{ff7b851e-c59d-4e21-b363-19f1238bf962}</Project>
+      <Name>CQRSlite.PCL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

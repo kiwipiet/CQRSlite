@@ -1,4 +1,4 @@
-﻿using CQRSlite.Domain.Exception;
+﻿using CQRSlite.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 

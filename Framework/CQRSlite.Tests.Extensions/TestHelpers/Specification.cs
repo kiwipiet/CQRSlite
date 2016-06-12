@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CQRSlite.Commands;
 using CQRSlite.Domain;
-using CQRSlite.Domain.Exception;
+using CQRSlite.Domain.Exceptions;
 using CQRSlite.Events;
-using CQRSlite.Snapshots;
 using NUnit.Framework;
 
 namespace CQRSlite.Tests.Extensions.TestHelpers
@@ -23,19 +22,15 @@ namespace CQRSlite.Tests.Extensions.TestHelpers
         protected abstract TCommand When();
         protected abstract THandler BuildHandler();
 
-        protected Snapshot Snapshot { get; set; }
         protected IList<IEvent> EventDescriptors { get; set; }
         protected IList<IEvent> PublishedEvents { get; set; }
 		
         [SetUp]
-        public void Run()
+        public virtual void Run()
         {
             var eventpublisher = new SpecEventPublisher();
             var eventstorage = new SpecEventStorage(eventpublisher, Given().ToList());
-            var snapshotstorage = new SpecSnapShotStorage(Snapshot);
-
-            var snapshotStrategy = new DefaultSnapshotStrategy();
-		    var repository = new SnapshotRepository(snapshotstorage, snapshotStrategy, new Repository(eventstorage), eventstorage);
+            var repository = new Repository(eventstorage);
             Session = new Session(repository);
 
             try
@@ -50,29 +45,8 @@ namespace CQRSlite.Tests.Extensions.TestHelpers
             var handler = BuildHandler();
             handler.Handle(When());
 
-            Snapshot = snapshotstorage.Snapshot;
             PublishedEvents = eventpublisher.PublishedEvents;
             EventDescriptors = eventstorage.Events;
-        }
-    }
-
-    internal class SpecSnapShotStorage : ISnapshotStore
-    {
-        public SpecSnapShotStorage(Snapshot snapshot)
-        {
-            Snapshot = snapshot;
-        }
-
-        public Snapshot Snapshot { get; set; }
-
-        public Snapshot Get(Guid id)
-        {
-            return Snapshot;
-        }
-
-        public void Save(Snapshot snapshot)
-        {
-            Snapshot = snapshot;
         }
     }
 

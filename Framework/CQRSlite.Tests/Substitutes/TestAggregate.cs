@@ -1,11 +1,12 @@
 ﻿using System;
 using CQRSlite.Domain;
+using CQRSlite.Events;
 
 namespace CQRSlite.Tests.Substitutes
 {
     public class TestAggregate : AggregateRoot
     {
-        private TestAggregate() { }
+        public TestAggregate() { }
         public TestAggregate(Guid id)
         {
             Id = id;
@@ -24,10 +25,9 @@ namespace CQRSlite.Tests.Substitutes
             ApplyChange(new TestAggregateDidSomeethingElse());
         }
 
-        public void Apply(TestAggregateDidSomething e)
+        public override void Apply(IEvent @event)
         {
-            DidSomethingCount++;
+            if (@event.GetType() == typeof(TestAggregateDidSomething)) DidSomethingCount++;
         }
-
     }
 }

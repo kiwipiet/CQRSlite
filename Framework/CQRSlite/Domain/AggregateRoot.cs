@@ -1,6 +1,5 @@
-﻿using CQRSlite.Domain.Exception;
+﻿using CQRSlite.Domain.Exceptions;
 using CQRSlite.Events;
-using CQRSlite.Infrastructure;
 using System;
 using System.Collections.Generic;
 
@@ -68,7 +67,7 @@ namespace CQRSlite.Domain
         {
             lock (_changes)
             {
-                this.AsDynamic().Apply(@event);
+                Apply(@event);
                 if (isNew)
                 {
                     _changes.Add(@event);
@@ -80,5 +79,7 @@ namespace CQRSlite.Domain
                 }
             }
         }
+
+        public abstract void Apply(IEvent @event);
     }
 }

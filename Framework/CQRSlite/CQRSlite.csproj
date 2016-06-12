@@ -53,39 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\CacheRepository.cs" />
+    <Compile Include="Config\BusRegistrar.cs" />
     <Compile Include="Config\IServiceLocator.cs" />
-    <Compile Include="Domain\AggregateDescriptor.cs" />
-    <Compile Include="Domain\Exception\AggregateOrEventMissingIdException.cs" />
-    <Compile Include="Domain\AggregateRoot.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandSender.cs" />
-    <Compile Include="Domain\Exception\EventsOutOfOrderException.cs" />
-    <Compile Include="Domain\Exception\MissingParameterLessConstructorException.cs" />
-    <Compile Include="Domain\Repository.cs" />
-    <Compile Include="Domain\IRepository.cs" />
-    <Compile Include="Domain\ISession.cs" />
-    <Compile Include="Domain\Session.cs" />
-    <Compile Include="Events\IEventPublisher.cs" />
-    <Compile Include="Events\IEventStore.cs" />
-    <Compile Include="Bus\IHandlerRegistrar.cs" />
-    <Compile Include="Commands\ICommandHandler.cs" />
-    <Compile Include="Events\IEventHandler.cs" />
-    <Compile Include="Snapshots\ISnapshotStore.cs" />
-    <Compile Include="Domain\Factories\AggregateFactory.cs" />
-    <Compile Include="Snapshots\Snapshot.cs" />
-    <Compile Include="Snapshots\SnapshotAggregateRoot.cs" />
-    <Compile Include="Messages\IHandler.cs" />
-    <Compile Include="Domain\Exception\AggregateNotFoundException.cs" />
-    <Compile Include="Domain\Exception\ConcurrencyException.cs" />
-    <Compile Include="Bus\InProcessBus.cs" />
-    <Compile Include="Events\IEvent.cs" />
-    <Compile Include="Snapshots\ISnapshotStrategy.cs" />
     <Compile Include="Infrastructure\PrivateReflectionDynamicObject.cs" />
     <Compile Include="Infrastructure\PrivateReflectionDynamicObjectExtensions.cs" />
-    <Compile Include="Snapshots\DefaultSnapshotStrategy.cs" />
-    <Compile Include="Messages\IMessage.cs" />
-    <Compile Include="Config\BusRegistrar.cs" />
-    <Compile Include="Snapshots\SnapshotRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -104,6 +75,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="CQRSlite.PCL.csproj">
+      <Project>{ff7b851e-c59d-4e21-b363-19f1238bf962}</Project>
+      <Name>CQRSlite.PCL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

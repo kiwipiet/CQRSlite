@@ -1,8 +1,8 @@
-using CQRSlite.Domain.Exception;
 using CQRSlite.Domain.Factories;
 using CQRSlite.Events;
 using System;
 using System.Linq;
+using CQRSlite.Domain.Exceptions;
 
 namespace CQRSlite.Domain
 {

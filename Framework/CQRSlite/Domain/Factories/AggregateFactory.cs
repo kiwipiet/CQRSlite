@@ -1,5 +1,5 @@
-﻿using CQRSlite.Domain.Exception;
-using System;
+﻿using System;
+using CQRSlite.Domain.Exceptions;
 
 namespace CQRSlite.Domain.Factories
 {
@@ -9,11 +9,11 @@ namespace CQRSlite.Domain.Factories
         {
             try
             {
-                return (T)Activator.CreateInstance(typeof(T), true);
+                return (T)Activator.CreateInstance(typeof(T));
             }
-            catch (MissingMethodException)
+            catch (MissingMemberException ex)
             {
-                throw new MissingParameterLessConstructorException(typeof(T));
+                throw new MissingParameterLessConstructorException(typeof(T), ex);
             }
         }
     }

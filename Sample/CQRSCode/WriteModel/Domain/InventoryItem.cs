@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using CQRSCode.ReadModel.Events;
 using CQRSlite.Domain;
+using CQRSlite.Events;
 
 namespace CQRSCode.WriteModel.Domain
 {
@@ -8,14 +11,13 @@ namespace CQRSCode.WriteModel.Domain
     {
         private bool _activated;
 
-        private void Apply(InventoryItemCreated e)
-        {
-            _activated = true;
-        }
+        private readonly IDictionary<Type, Action<IEvent>> _applyEvent = new Dictionary<Type, Action<IEvent>>();
 
-        private void Apply(InventoryItemDeactivated e)
+        public override void Apply(IEvent @event)
         {
-            _activated = false;
+            Debug.WriteLine(@event);
+            var eventType = @event.GetType();
+            if (_applyEvent.ContainsKey(eventType)) _applyEvent[eventType].Invoke(@event);
         }
 
         public void ChangeName(string newName)
@@ -43,8 +45,12 @@ namespace CQRSCode.WriteModel.Domain
             ApplyChange(new InventoryItemDeactivated(Id));
         }
 
-        private InventoryItem(){}
-        public InventoryItem(Guid id, string name)
+        public InventoryItem()
+        {
+            _applyEvent.Add(typeof(InventoryItemCreated), e => _activated = true);
+            _applyEvent.Add(typeof(InventoryItemDeactivated), e => _activated = false);
+        }
+        public InventoryItem(Guid id, string name) : this()
         {
             Id = id;
             ApplyChange(new InventoryItemCreated(id, name));
