@@ -9,7 +9,6 @@ namespace CQRSlite.Domain
     public class Repository : IRepository
     {
         private readonly IEventStore _eventStore;
-        private readonly IEventPublisher _publisher;
 
         public Repository(IEventStore eventStore)
         {
@@ -21,21 +20,6 @@ namespace CQRSlite.Domain
             _eventStore = eventStore;
         }
 
-        [Obsolete("The eventstore should publish events after saving")]
-        public Repository(IEventStore eventStore, IEventPublisher publisher)
-        {
-            if (eventStore == null)
-            {
-                throw new ArgumentNullException(nameof(eventStore));
-            }
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            _eventStore = eventStore;
-            _publisher = publisher;
-        }
-
         public void Save<T>(T aggregate, int? expectedVersion = null) where T : AggregateRoot
         {
             if (expectedVersion != null && _eventStore.Get<T>(aggregate.Id, expectedVersion.Value).Any())
@@ -45,14 +29,6 @@ namespace CQRSlite.Domain
 
             var changes = aggregate.FlushUncommitedChanges();
             _eventStore.Save<T>(changes);
-
-            if (_publisher != null)
-            {
-                foreach (var @event in changes)
-                {
-                    _publisher.Publish(@event);
-                }
-            }
         }
 
         public T Get<T>(Guid aggregateId) where T : AggregateRoot
@@ -62,7 +38,7 @@ namespace CQRSlite.Domain
 
         private T LoadAggregate<T>(Guid id) where T : AggregateRoot
         {
-            var events = _eventStore.Get<T>(id, -1);
+            var events = _eventStore.Get<T>(id, -1).ToList();
             if (!events.Any())
             {
                 throw new AggregateNotFoundException(typeof(T), id);

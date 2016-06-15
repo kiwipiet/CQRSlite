@@ -16,11 +16,9 @@ namespace CQRSlite.Tests.Domain
         [SetUp]
         public void Setup()
         {
-            _eventStore = new TestInMemoryEventStore();
             _eventPublisher = new TestEventPublisher();
-#pragma warning disable 618
-            _rep = new Repository(_eventStore, _eventPublisher);
-#pragma warning restore 618
+            _eventStore = new TestInMemoryEventStore(_eventPublisher);
+            _rep = new Repository(_eventStore);
             _session = new Session(_rep);
 
             _aggregate = new TestAggregateNoParameterLessConstructor(2);
