@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using CQRSCode.ReadModel.Events;
 using CQRSlite.Domain;
-using CQRSlite.Events;
 
 namespace CQRSCode.WriteModel.Domain
 {
     public class InventoryItem : AggregateRoot
     {
         private bool _activated;
-
-        private readonly IDictionary<Type, Action<IEvent>> _applyEvent = new Dictionary<Type, Action<IEvent>>();
-
-        public override void Apply(IEvent @event)
-        {
-            Debug.WriteLine(@event);
-            var eventType = @event.GetType();
-            if (_applyEvent.ContainsKey(eventType)) _applyEvent[eventType].Invoke(@event);
-        }
 
         public void ChangeName(string newName)
         {
@@ -31,7 +19,6 @@ namespace CQRSCode.WriteModel.Domain
             if (count <= 0) throw new InvalidOperationException("cant remove negative count from inventory");
             ApplyChange(new ItemsRemovedFromInventory(Id, count));
         }
-
 
         public void CheckIn(int count)
         {
@@ -47,8 +34,8 @@ namespace CQRSCode.WriteModel.Domain
 
         public InventoryItem()
         {
-            _applyEvent.Add(typeof(InventoryItemCreated), e => _activated = true);
-            _applyEvent.Add(typeof(InventoryItemDeactivated), e => _activated = false);
+            AddEventAction<InventoryItemCreated>(e => _activated = true);
+            AddEventAction<InventoryItemDeactivated>(e => _activated = false);
         }
         public InventoryItem(Guid id, string name) : this()
         {

@@ -1,6 +1,5 @@
 ﻿using System;
 using CQRSlite.Domain;
-using CQRSlite.Events;
 
 namespace CQRSlite.Tests.Substitutes
 {
@@ -14,10 +13,6 @@ namespace CQRSlite.Tests.Substitutes
         public void DoSomething()
         {
             ApplyChange(new TestAggregateDidSomething());
-        }
-
-        public override void Apply(IEvent @event)
-        {
         }
     }
 }

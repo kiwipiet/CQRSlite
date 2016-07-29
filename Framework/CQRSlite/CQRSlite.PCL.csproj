@@ -44,6 +44,8 @@
     <Compile Include="Commands\ICommandSender.cs" />
     <Compile Include="Domain\AggregateDescriptor.cs" />
     <Compile Include="Domain\AggregateRoot.cs" />
+    <Compile Include="Domain\AsyncRepository.cs" />
+    <Compile Include="Domain\AsyncSession.cs" />
     <Compile Include="Domain\Exceptions\AggregateNotFoundException.cs" />
     <Compile Include="Domain\Exceptions\AggregateOrEventMissingIdException.cs" />
     <Compile Include="Domain\Exceptions\ConcurrencyException.cs" />

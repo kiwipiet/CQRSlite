@@ -1,5 +1,4 @@
-﻿using System;
-using CQRSlite.Events;
+﻿using CQRSlite.Events;
 
 namespace CQRSlite.Tests.Substitutes
 {

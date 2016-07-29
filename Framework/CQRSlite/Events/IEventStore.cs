@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CQRSlite.Events
 {
@@ -7,5 +8,10 @@ namespace CQRSlite.Events
     {
         void Save(IEnumerable<IEvent> events);
         IEnumerable<IEvent> Get(Guid aggregateId, int fromVersion);
+    }
+    public interface IAsyncEventStore
+    {
+        Task SaveAsync(IEnumerable<IEvent> events);
+        Task<IEnumerable<IEvent>> GetAsync(Guid aggregateId, int fromVersion);
     }
 }

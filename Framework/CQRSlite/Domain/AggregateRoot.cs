@@ -2,12 +2,14 @@
 using CQRSlite.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CQRSlite.Domain
 {
     public abstract class AggregateRoot
     {
         private readonly List<IEvent> _changes = new List<IEvent>();
+        private readonly IDictionary<Type, Action<IEvent>> _applyEvent = new Dictionary<Type, Action<IEvent>>();
 
         public Guid Id { get; protected set; }
         public int Version { get; protected set; }
@@ -80,6 +82,16 @@ namespace CQRSlite.Domain
             }
         }
 
-        public abstract void Apply(IEvent @event);
+        public void Apply(IEvent @event)
+        {
+            Debug.WriteLine(@event);
+            var eventType = @event.GetType();
+            if (_applyEvent.ContainsKey(eventType)) _applyEvent[eventType].Invoke(@event);
+        }
+
+        public void AddEventAction<T>(Action<IEvent> action) where T : IEvent
+        {
+            _applyEvent.Add(typeof(T), action);
+        }
     }
 }
