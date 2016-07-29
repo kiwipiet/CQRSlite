@@ -18,7 +18,7 @@ namespace CQRSlite.Tests.Substitutes
             _eventPublisher = eventPublisher;
         }
 
-        public void Save<T>(IEnumerable<IEvent> events)
+        public void Save(IEnumerable<IEvent> events)
         {
             lock (Events)
             {
@@ -33,7 +33,7 @@ namespace CQRSlite.Tests.Substitutes
             }
         }
 
-        public IEnumerable<IEvent> Get<T>(Guid aggregateId, int fromVersion)
+        public IEnumerable<IEvent> Get(Guid aggregateId, int fromVersion)
         {
             lock (Events)
             {

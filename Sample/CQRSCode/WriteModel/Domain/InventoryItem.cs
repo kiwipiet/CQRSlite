@@ -22,7 +22,7 @@ namespace CQRSCode.WriteModel.Domain
 
         public void ChangeName(string newName)
         {
-            if (string.IsNullOrEmpty(newName)) throw new ArgumentException("newName");
+            if (string.IsNullOrEmpty(newName)) throw new ArgumentException(nameof(newName));
             ApplyChange(new InventoryItemRenamed(Id, newName));
         }
 

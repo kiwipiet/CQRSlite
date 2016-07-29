@@ -22,13 +22,13 @@ namespace CQRSlite.Domain
 
         public void Save<T>(T aggregate, int? expectedVersion = null) where T : AggregateRoot
         {
-            if (expectedVersion != null && _eventStore.Get<T>(aggregate.Id, expectedVersion.Value).Any())
+            if (expectedVersion != null && _eventStore.Get(aggregate.Id, expectedVersion.Value).Any())
             {
                 throw new ConcurrencyException(aggregate.Id);
             }
 
             var changes = aggregate.FlushUncommitedChanges();
-            _eventStore.Save<T>(changes);
+            _eventStore.Save(changes);
         }
 
         public T Get<T>(Guid aggregateId) where T : AggregateRoot
@@ -38,7 +38,7 @@ namespace CQRSlite.Domain
 
         private T LoadAggregate<T>(Guid id) where T : AggregateRoot
         {
-            var events = _eventStore.Get<T>(id, -1).ToList();
+            var events = _eventStore.Get(id, -1).ToList();
             if (!events.Any())
             {
                 throw new AggregateNotFoundException(typeof(T), id);

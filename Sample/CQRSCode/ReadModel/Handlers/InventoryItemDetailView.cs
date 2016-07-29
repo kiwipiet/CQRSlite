@@ -24,7 +24,7 @@ namespace CQRSCode.ReadModel.Handlers
             d.Version = message.Version;
         }
 
-        private InventoryItemDetailsDto GetDetailsItem(Guid id)
+        private static InventoryItemDetailsDto GetDetailsItem(Guid id)
         {
             InventoryItemDetailsDto dto;
             if(!InMemoryDatabase.Details.TryGetValue(id, out dto))
