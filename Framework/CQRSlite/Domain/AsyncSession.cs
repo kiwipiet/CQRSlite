@@ -21,7 +21,7 @@ namespace CQRSlite.Domain
             _trackedAggregates = new Dictionary<Guid, AggregateDescriptor>();
         }
 
-        public Task AddAsync<T>(T aggregate) where T : AggregateRoot
+        public Task<T> AddAsync<T>(T aggregate) where T : AggregateRoot
         {
             if (!IsTracked(aggregate.Id))
             {
@@ -31,7 +31,7 @@ namespace CQRSlite.Domain
             {
                 throw new ConcurrencyException(aggregate.Id);
             }
-            return Task.FromResult(0);
+            return Task.FromResult(aggregate);
         }
 
         public async Task<T> GetAsync<T>(Guid id, int? expectedVersion = null) where T : AggregateRoot
@@ -51,9 +51,7 @@ namespace CQRSlite.Domain
             {
                 throw new ConcurrencyException(id);
             }
-            await AddAsync(aggregate);
-
-            return aggregate;
+            return await AddAsync(aggregate);
         }
 
         private bool IsTracked(Guid id)

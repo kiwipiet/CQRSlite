@@ -39,6 +39,8 @@
   <ItemGroup>
     <Compile Include="Bus\IHandlerRegistrar.cs" />
     <Compile Include="Bus\InProcessBus.cs" />
+    <Compile Include="Commands\IAsyncCommandHandler.cs" />
+    <Compile Include="Commands\IAsyncCommandSender.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandHandler.cs" />
     <Compile Include="Commands\ICommandSender.cs" />
@@ -57,6 +59,9 @@
     <Compile Include="Domain\Repository.cs" />
     <Compile Include="Domain\Session.cs" />
     <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\IAsyncEventHandler.cs" />
+    <Compile Include="Events\IAsyncEventPublisher.cs" />
+    <Compile Include="Events\IAsyncEventStore.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Events\IEventPublisher.cs" />

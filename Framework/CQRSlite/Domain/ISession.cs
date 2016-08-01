@@ -11,7 +11,7 @@ namespace CQRSlite.Domain
     }
     public interface IAsyncSession
     {
-        Task AddAsync<T>(T aggregate) where T : AggregateRoot;
+        Task<T> AddAsync<T>(T aggregate) where T : AggregateRoot;
         Task<T> GetAsync<T>(Guid id, int? expectedVersion = null) where T : AggregateRoot;
         Task CommitAsync();
     }
