@@ -93,5 +93,13 @@ namespace CQRSlite.Domain
         {
             _applyEvent.Add(typeof(T), action);
         }
+
+        public void SyncEvents(IEnumerable<IEvent> events)
+        {
+            foreach (var @event in events)
+            {
+                ApplyChange(@event);
+            }
+        }
     }
 }

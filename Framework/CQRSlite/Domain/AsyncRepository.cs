@@ -39,16 +39,11 @@ namespace CQRSlite.Domain
 
         public async Task<T> GetAsync<T>(Guid aggregateId) where T : AggregateRoot
         {
-            return await LoadAggregate<T>(aggregateId);
-        }
-
-        private async Task<T> LoadAggregate<T>(Guid id) where T : AggregateRoot
-        {
-            var eventsTask = await _eventStore.GetAsync(id, -1);
+            var eventsTask = await _eventStore.GetAsync(aggregateId, -1);
             var events = eventsTask.ToList();
             if (!events.Any())
             {
-                throw new AggregateNotFoundException(typeof(T), id);
+                throw new AggregateNotFoundException(typeof(T), aggregateId);
             }
 
             var aggregate = AggregateFactory.CreateAggregate<T>();
