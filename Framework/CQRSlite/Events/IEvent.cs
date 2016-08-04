@@ -7,7 +7,6 @@ namespace CQRSlite.Events
     {
         /// <summary>
         ///     AggregateRootId
-        ///     CorrelationId
         /// </summary>
         Guid Id { get; set; }
 
