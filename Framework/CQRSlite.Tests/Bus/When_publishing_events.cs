@@ -4,16 +4,16 @@ using NUnit.Framework;
 
 namespace CQRSlite.Tests.Bus
 {
-	[TestFixture]
+    [TestFixture]
     public class When_publishing_events
     {
-        private InProcessBus _bus;
-
-		[SetUp]
+        [SetUp]
         public void Setup()
         {
             _bus = new InProcessBus();
         }
+
+        private InProcessBus _bus;
 
         [Test]
         public void Should_publish_to_all_handlers()

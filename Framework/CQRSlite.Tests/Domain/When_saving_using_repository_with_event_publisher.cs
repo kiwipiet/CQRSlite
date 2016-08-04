@@ -7,12 +7,6 @@ namespace CQRSlite.Tests.Domain
     [TestFixture]
     public class When_saving_using_repository_with_event_publisher
     {
-        private TestInMemoryEventStore _eventStore;
-        private TestAggregateNoParameterLessConstructor _aggregate;
-        private TestEventPublisher _eventPublisher;
-        private ISession _session;
-        private Repository _rep;
-
         [SetUp]
         public void Setup()
         {
@@ -23,6 +17,12 @@ namespace CQRSlite.Tests.Domain
 
             _aggregate = new TestAggregateNoParameterLessConstructor(2);
         }
+
+        private TestInMemoryEventStore _eventStore;
+        private TestAggregateNoParameterLessConstructor _aggregate;
+        private TestEventPublisher _eventPublisher;
+        private ISession _session;
+        private Repository _rep;
 
         [Test]
         public void Should_publish_events()

@@ -11,9 +11,9 @@ namespace CQRSlite.Tests.Cache
 {
     public class When_saving_same_aggregate_in_parallel
     {
+        private TestAggregate _aggregate;
         private CacheRepository _rep1;
         private CacheRepository _rep2;
-        private TestAggregate _aggregate;
         private TestInMemoryEventStore _testStore;
 
         [SetUp]
@@ -32,33 +32,33 @@ namespace CQRSlite.Tests.Cache
             _rep1.Save(_aggregate);
 
             var t1 = new Task(() =>
-                                  {
-                                      for (var i = 0; i < 100; i++)
-                                      {
-                                          var aggregate = _rep1.Get<TestAggregate>(_aggregate.Id);
-                                          aggregate.DoSomething();
-                                          _rep1.Save(aggregate);
-                                      }
-                                  });
+            {
+                for (var i = 0; i < 100; i++)
+                {
+                    var aggregate = _rep1.Get<TestAggregate>(_aggregate.Id);
+                    aggregate.DoSomething();
+                    _rep1.Save(aggregate);
+                }
+            });
 
             var t2 = new Task(() =>
-                                  {
-                                      for (var i = 0; i < 100; i++)
-                                      {
-                                          var aggregate = _rep2.Get<TestAggregate>(_aggregate.Id);
-                                          aggregate.DoSomething();
-                                          _rep2.Save(aggregate);
-                                      }
-                                  });
+            {
+                for (var i = 0; i < 100; i++)
+                {
+                    var aggregate = _rep2.Get<TestAggregate>(_aggregate.Id);
+                    aggregate.DoSomething();
+                    _rep2.Save(aggregate);
+                }
+            });
             var t3 = new Task(() =>
-                                  {
-                                      for (var i = 0; i < 100; i++)
-                                      {
-                                          var aggregate = _rep2.Get<TestAggregate>(_aggregate.Id);
-                                          aggregate.DoSomething();
-                                          _rep2.Save(aggregate);
-                                      }
-                                  });
+            {
+                for (var i = 0; i < 100; i++)
+                {
+                    var aggregate = _rep2.Get<TestAggregate>(_aggregate.Id);
+                    aggregate.DoSomething();
+                    _rep2.Save(aggregate);
+                }
+            });
             t1.Start();
             t2.Start();
             t3.Start();

@@ -9,7 +9,7 @@ namespace CQRSlite.Domain.Factories
         {
             try
             {
-                return (T)Activator.CreateInstance(typeof(T));
+                return (T) Activator.CreateInstance(typeof(T));
             }
             catch (MissingMemberException ex)
             {

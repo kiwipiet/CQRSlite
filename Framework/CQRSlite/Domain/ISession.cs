@@ -9,6 +9,7 @@ namespace CQRSlite.Domain
         T Get<T>(Guid id, int? expectedVersion = null) where T : AggregateRoot;
         void Commit();
     }
+
     public interface IAsyncSession
     {
         Task<T> AddAsync<T>(T aggregate) where T : AggregateRoot;

@@ -6,6 +6,7 @@ namespace CQRSlite.Messages
     {
         void Handle(T message);
     }
+
     public interface IAsyncHandler<in T> where T : IMessage
     {
         Task HandleAsync(T message);

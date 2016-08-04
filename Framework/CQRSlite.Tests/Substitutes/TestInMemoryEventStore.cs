@@ -13,6 +13,7 @@ namespace CQRSlite.Tests.Substitutes
         public TestInMemoryEventStore()
         {
         }
+
         public TestInMemoryEventStore(IEventPublisher eventPublisher)
         {
             _eventPublisher = eventPublisher;
@@ -37,7 +38,8 @@ namespace CQRSlite.Tests.Substitutes
         {
             lock (Events)
             {
-                return Events.Where(x => x.Version > fromVersion && x.Id == aggregateId).OrderBy(x => x.Version).ToList();
+                return
+                    Events.Where(x => x.Version > fromVersion && x.Id == aggregateId).OrderBy(x => x.Version).ToList();
             }
         }
     }

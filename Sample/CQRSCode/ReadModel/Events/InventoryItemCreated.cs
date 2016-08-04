@@ -3,13 +3,14 @@ using CQRSlite.Events;
 
 namespace CQRSCode.ReadModel.Events
 {
-    public class InventoryItemCreated : Event 
-	{
+    public class InventoryItemCreated : Event
+    {
         public readonly string Name;
-        public InventoryItemCreated(Guid id, string name) 
+
+        public InventoryItemCreated(Guid id, string name)
         {
             Id = id;
             Name = name;
         }
-	}
+    }
 }

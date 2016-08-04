@@ -14,6 +14,7 @@ namespace CQRSTests.WriteModel
     public class WhenItemCreated : Specification<InventoryItem, InventoryCommandHandlers, CreateInventoryItem>
     {
         private Guid _id;
+
         protected override InventoryCommandHandlers BuildHandler()
         {
             return new InventoryCommandHandlers(Session);
@@ -45,7 +46,7 @@ namespace CQRSTests.WriteModel
         [Then]
         public void Should_save_name()
         {
-            Assert.AreEqual("myname", ((InventoryItemCreated)PublishedEvents.First()).Name);
+            Assert.AreEqual("myname", ((InventoryItemCreated) PublishedEvents.First()).Name);
         }
     }
 }

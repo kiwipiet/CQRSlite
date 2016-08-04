@@ -9,22 +9,12 @@ using NUnit.Framework;
 
 namespace CQRSlite.Tests.Extensions.TestHelpers
 {
-	[TestFixture]
-    public abstract class Specification<TAggregate, THandler, TCommand> 
-        where TAggregate: AggregateRoot
+    [TestFixture]
+    public abstract class Specification<TAggregate, THandler, TCommand>
+        where TAggregate : AggregateRoot
         where THandler : class, ICommandHandler<TCommand>
         where TCommand : ICommand
     {
-
-        protected TAggregate Aggregate { get; set; }
-        protected ISession Session { get; set; }
-        protected abstract IEnumerable<IEvent> Given();
-        protected abstract TCommand When();
-        protected abstract THandler BuildHandler();
-
-        protected IList<IEvent> EventDescriptors { get; set; }
-        protected IList<IEvent> PublishedEvents { get; set; }
-		
         [SetUp]
         public virtual void Run()
         {
@@ -39,7 +29,6 @@ namespace CQRSlite.Tests.Extensions.TestHelpers
             }
             catch (AggregateNotFoundException)
             {
-		        
             }
 
             var handler = BuildHandler();
@@ -48,6 +37,15 @@ namespace CQRSlite.Tests.Extensions.TestHelpers
             PublishedEvents = eventpublisher.PublishedEvents;
             EventDescriptors = eventstorage.Events;
         }
+
+        protected TAggregate Aggregate { get; set; }
+        protected ISession Session { get; set; }
+        protected abstract IEnumerable<IEvent> Given();
+        protected abstract TCommand When();
+        protected abstract THandler BuildHandler();
+
+        protected IList<IEvent> EventDescriptors { get; set; }
+        protected IList<IEvent> PublishedEvents { get; set; }
     }
 
     internal class SpecEventPublisher : IEventPublisher
@@ -57,12 +55,12 @@ namespace CQRSlite.Tests.Extensions.TestHelpers
             PublishedEvents = new List<IEvent>();
         }
 
+        public IList<IEvent> PublishedEvents { get; set; }
+
         public void Publish<T>(T @event) where T : IEvent
         {
             PublishedEvents.Add(@event);
         }
-
-        public IList<IEvent> PublishedEvents { get; set; }
     }
 
     internal class SpecEventStorage : IEventStore

@@ -8,7 +8,6 @@ namespace CQRSlite.Tests.Substitutes
     {
         public void Save(IEnumerable<IEvent> events)
         {
-            
         }
 
         public IEnumerable<IEvent> Get(Guid aggregateId, int version)
@@ -22,7 +21,7 @@ namespace CQRSlite.Tests.Substitutes
             {
                 new TestAggregateDidSomething {Id = aggregateId, Version = 3},
                 new TestAggregateDidSomething {Id = aggregateId, Version = 2},
-                new TestAggregateDidSomeethingElse {Id = aggregateId, Version = 1},
+                new TestAggregateDidSomeethingElse {Id = aggregateId, Version = 1}
             };
         }
     }

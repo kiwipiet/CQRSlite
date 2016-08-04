@@ -5,17 +5,18 @@ namespace CQRSlite.Tests.Substitutes
 {
     public class TestAggregate : AggregateRoot
     {
+        public int DidSomethingCount;
+
         public TestAggregate()
         {
             AddEventAction<TestAggregateDidSomething>(e => DidSomethingCount++);
         }
-        public TestAggregate(Guid id)
+
+        public TestAggregate(Guid id) : this()
         {
             Id = id;
             ApplyChange(new TestAggregateCreated());
         }
-
-        public int DidSomethingCount;
 
         public void DoSomething()
         {

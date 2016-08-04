@@ -6,17 +6,17 @@ using NUnit.Framework;
 
 namespace CQRSlite.Tests.Domain
 {
-	[TestFixture]
+    [TestFixture]
     public class When_getting_events_out_of_order
     {
-	    private ISession _session;
-
-	    [SetUp]
+        [SetUp]
         public void Setup()
         {
             var eventStore = new TestEventStoreWithBugs();
             _session = new Session(new Repository(eventStore));
         }
+
+        private ISession _session;
 
         [Test]
         public void Should_throw_concurrency_exception()

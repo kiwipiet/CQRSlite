@@ -9,10 +9,6 @@ namespace CQRSlite.Tests.Domain
     [TestFixture]
     public class When_saving_events_without_id
     {
-        private TestInMemoryEventStore _eventStore;
-        private TestAggregate _aggregate;
-        private Repository _rep;
-
         [SetUp]
         public void Setup()
         {
@@ -21,6 +17,10 @@ namespace CQRSlite.Tests.Domain
 
             _aggregate = new TestAggregate(Guid.Empty);
         }
+
+        private TestInMemoryEventStore _eventStore;
+        private TestAggregate _aggregate;
+        private Repository _rep;
 
         [Test]
         public void Should_throw_aggregate_or_event_missing_id_exception_from_repository()

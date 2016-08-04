@@ -4,16 +4,16 @@ using NUnit.Framework;
 
 namespace CQRSlite.Tests.Domain
 {
-	[TestFixture]
+    [TestFixture]
     public class When_replaying_events
     {
-        private TestAggregate _aggregate;
-
-		[SetUp]
+        [SetUp]
         public void Setup()
         {
             _aggregate = new TestAggregate(Guid.NewGuid());
         }
+
+        private TestAggregate _aggregate;
 
         [Test]
         public void Should_call_apply_if_exist()

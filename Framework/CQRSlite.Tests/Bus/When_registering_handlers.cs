@@ -5,13 +5,10 @@ using NUnit.Framework;
 
 namespace CQRSlite.Tests.Bus
 {
-	[TestFixture]
+    [TestFixture]
     public class When_registering_handlers
     {
-        private BusRegistrar _register;
-        private TestServiceLocator _locator;
-
-		[SetUp]
+        [SetUp]
         public void Setup()
         {
             _locator = new TestServiceLocator();
@@ -20,11 +17,8 @@ namespace CQRSlite.Tests.Bus
                 _register.Register(GetType());
         }
 
-        [Test]
-        public void Should_register_all_handlers()
-        {
-            Assert.AreEqual(3, TestHandleRegistrar.HandlerList.Count);
-        }
+        private BusRegistrar _register;
+        private TestServiceLocator _locator;
 
         [Test]
         public void Should_be_able_to_run_all_handlers()
@@ -38,6 +32,12 @@ namespace CQRSlite.Tests.Bus
             {
                 Assert.That(handler.TimesRun, Is.EqualTo(1));
             }
+        }
+
+        [Test]
+        public void Should_register_all_handlers()
+        {
+            Assert.AreEqual(3, TestHandleRegistrar.HandlerList.Count);
         }
     }
 }

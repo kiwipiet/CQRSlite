@@ -6,16 +6,23 @@ using CQRSlite.Domain;
 namespace CQRSCode.WriteModel.Handlers
 {
     public class InventoryCommandHandlers : ICommandHandler<CreateInventoryItem>,
-											ICommandHandler<DeactivateInventoryItem>,
-											ICommandHandler<RemoveItemsFromInventory>,
-											ICommandHandler<CheckInItemsToInventory>,
-											ICommandHandler<RenameInventoryItem>
+        ICommandHandler<DeactivateInventoryItem>,
+        ICommandHandler<RemoveItemsFromInventory>,
+        ICommandHandler<CheckInItemsToInventory>,
+        ICommandHandler<RenameInventoryItem>
     {
         private readonly ISession _session;
 
         public InventoryCommandHandlers(ISession session)
         {
             _session = session;
+        }
+
+        public void Handle(CheckInItemsToInventory message)
+        {
+            var item = _session.Get<InventoryItem>(message.Id, message.ExpectedVersion);
+            item.CheckIn(message.Count);
+            _session.Commit();
         }
 
         public void Handle(CreateInventoryItem message)
@@ -36,13 +43,6 @@ namespace CQRSCode.WriteModel.Handlers
         {
             var item = _session.Get<InventoryItem>(message.Id, message.ExpectedVersion);
             item.Remove(message.Count);
-            _session.Commit();
-        }
-
-        public void Handle(CheckInItemsToInventory message)
-        {
-            var item = _session.Get<InventoryItem>(message.Id, message.ExpectedVersion);
-            item.CheckIn(message.Count);
             _session.Commit();
         }
 

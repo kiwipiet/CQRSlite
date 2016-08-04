@@ -9,7 +9,7 @@ using StructureMap;
 using StructureMap.Graph;
 using StructureMap.Web;
 
-namespace CQRSWeb 
+namespace CQRSWeb
 {
     public static class IoC
     {

@@ -16,11 +16,6 @@ namespace CQRSWeb
             _container = container;
         }
 
-        public T GetService<T>()
-        {
-            return (T)GetService(typeof(T));
-        }
-
         public object GetService(Type serviceType)
         {
             if (serviceType == null)
@@ -42,6 +37,11 @@ namespace CQRSWeb
         public IEnumerable<object> GetServices(Type serviceType)
         {
             return _container.GetAllInstances<object>().Where(s => s.GetType() == serviceType);
+        }
+
+        public T GetService<T>()
+        {
+            return (T) GetService(typeof(T));
         }
     }
 }

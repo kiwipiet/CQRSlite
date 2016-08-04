@@ -5,7 +5,7 @@ using CQRSCode.WriteModel.Handlers;
 using CQRSlite.Config;
 
 namespace CQRSWeb
-{	
+{
     public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -20,23 +20,23 @@ namespace CQRSWeb
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
+                new {controller = "Home", action = "Index", id = UrlParameter.Optional} // Parameter defaults
+                );
         }
 
         protected void Application_Start()
         {
-			AreaRegistration.RegisterAllAreas();
+            AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            RegisterHandlers((IServiceLocator)DependencyResolver.Current);
+            RegisterHandlers((IServiceLocator) DependencyResolver.Current);
         }
 
         private void RegisterHandlers(IServiceLocator serviceLocator)
         {
             var registrar = new BusRegistrar(serviceLocator);
-			registrar.Register(typeof(InventoryCommandHandlers));
+            registrar.Register(typeof(InventoryCommandHandlers));
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using CQRSlite.Domain.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using CQRSlite.Domain.Exceptions;
 
 namespace CQRSlite.Domain
 {
@@ -24,7 +24,8 @@ namespace CQRSlite.Domain
         {
             if (!IsTracked(aggregate.Id))
             {
-                _trackedAggregates.Add(aggregate.Id, new AggregateDescriptor { Aggregate = aggregate, Version = aggregate.Version });
+                _trackedAggregates.Add(aggregate.Id,
+                    new AggregateDescriptor {Aggregate = aggregate, Version = aggregate.Version});
             }
             else if (_trackedAggregates[aggregate.Id].Aggregate != aggregate)
             {
@@ -36,7 +37,7 @@ namespace CQRSlite.Domain
         {
             if (IsTracked(id))
             {
-                var trackedAggregate = (T)_trackedAggregates[id].Aggregate;
+                var trackedAggregate = (T) _trackedAggregates[id].Aggregate;
                 if (expectedVersion != null && trackedAggregate.Version != expectedVersion)
                 {
                     throw new ConcurrencyException(trackedAggregate.Id);
@@ -54,11 +55,6 @@ namespace CQRSlite.Domain
             return aggregate;
         }
 
-        private bool IsTracked(Guid id)
-        {
-            return _trackedAggregates.ContainsKey(id);
-        }
-
         public void Commit()
         {
             foreach (var descriptor in _trackedAggregates.Values)
@@ -66,6 +62,11 @@ namespace CQRSlite.Domain
                 _repository.Save(descriptor.Aggregate, descriptor.Version);
             }
             _trackedAggregates.Clear();
+        }
+
+        private bool IsTracked(Guid id)
+        {
+            return _trackedAggregates.ContainsKey(id);
         }
     }
 }

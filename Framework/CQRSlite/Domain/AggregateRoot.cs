@@ -1,15 +1,15 @@
-﻿using CQRSlite.Domain.Exceptions;
-using CQRSlite.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using CQRSlite.Domain.Exceptions;
+using CQRSlite.Events;
 
 namespace CQRSlite.Domain
 {
     public abstract class AggregateRoot
     {
-        private readonly List<IEvent> _changes = new List<IEvent>();
         private readonly IDictionary<Type, Action<IEvent>> _applyEvent = new Dictionary<Type, Action<IEvent>>();
+        private readonly List<IEvent> _changes = new List<IEvent>();
 
         public Guid Id { get; protected set; }
         public int Version { get; protected set; }

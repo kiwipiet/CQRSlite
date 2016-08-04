@@ -7,8 +7,8 @@ namespace CQRSCode.WriteModel
 {
     public class InMemoryEventStore : IEventStore
     {
-        private readonly IEventPublisher _publisher;
         private readonly Dictionary<Guid, List<IEvent>> _inMemoryDb = new Dictionary<Guid, List<IEvent>>();
+        private readonly IEventPublisher _publisher;
 
         public InMemoryEventStore(IEventPublisher publisher)
         {

@@ -9,13 +9,21 @@ namespace CQRSlite.Tests.Domain
     [TestFixture]
     public class When_adding_aggregates_to_repository
     {
-        private Session _session;
-
         [SetUp]
         public void SetUp()
         {
             var eventStore = new TestInMemoryEventStore();
             _session = new Session(new Repository(eventStore));
+        }
+
+        private Session _session;
+
+        [Test]
+        public void Should_not_throw_if_object_already_tracked()
+        {
+            var aggregate = new TestAggregate(Guid.NewGuid());
+            _session.Add(aggregate);
+            _session.Add(aggregate);
         }
 
         [Test]
@@ -25,14 +33,6 @@ namespace CQRSlite.Tests.Domain
             var aggregate2 = new TestAggregate(aggregate.Id);
             _session.Add(aggregate);
             Assert.Throws<ConcurrencyException>(() => _session.Add(aggregate2));
-        }
-
-        [Test]
-        public void Should_not_throw_if_object_already_tracked()
-        {
-            var aggregate = new TestAggregate(Guid.NewGuid());
-            _session.Add(aggregate);
-            _session.Add(aggregate);
         }
     }
 }

@@ -9,10 +9,6 @@ namespace CQRSlite.Tests.Cache
     [TestFixture]
     public class When_saving_fails
     {
-        private CacheRepository _rep;
-        private TestAggregate _aggregate;
-        private TestRepository _testRep;
-
         [SetUp]
         public void Setup()
         {
@@ -24,8 +20,14 @@ namespace CQRSlite.Tests.Cache
             {
                 _rep.Save(_aggregate, 100);
             }
-            catch (Exception){}
+            catch (Exception)
+            {
+            }
         }
+
+        private CacheRepository _rep;
+        private TestAggregate _aggregate;
+        private TestRepository _testRep;
 
         [Test]
         public void Should_evict_old_object_from_cache()

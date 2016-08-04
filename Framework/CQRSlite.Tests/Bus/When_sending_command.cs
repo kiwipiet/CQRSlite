@@ -5,16 +5,16 @@ using NUnit.Framework;
 
 namespace CQRSlite.Tests.Bus
 {
-	[TestFixture]
+    [TestFixture]
     public class When_sending_command
     {
-        private InProcessBus _bus;
-
-		[SetUp]
+        [SetUp]
         public void Setup()
         {
             _bus = new InProcessBus();
         }
+
+        private InProcessBus _bus;
 
         [Test]
         public void Should_run_handler()
@@ -23,7 +23,7 @@ namespace CQRSlite.Tests.Bus
             _bus.RegisterHandler<TestAggregateDoSomething>(handler.Handle);
             _bus.Send(new TestAggregateDoSomething());
 
-            Assert.AreEqual(1,handler.TimesRun);
+            Assert.AreEqual(1, handler.TimesRun);
         }
 
         [Test]

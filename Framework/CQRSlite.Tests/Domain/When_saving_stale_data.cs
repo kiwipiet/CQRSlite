@@ -9,11 +9,6 @@ namespace CQRSlite.Tests.Domain
     [TestFixture]
     public class When_saving_stale_data
     {
-        private TestInMemoryEventStore _eventStore;
-        private TestAggregate _aggregate;
-        private Repository _rep;
-        private Session _session;
-
         [SetUp]
         public void Setup()
         {
@@ -25,6 +20,11 @@ namespace CQRSlite.Tests.Domain
             _aggregate.DoSomething();
             _rep.Save(_aggregate);
         }
+
+        private TestInMemoryEventStore _eventStore;
+        private TestAggregate _aggregate;
+        private Repository _rep;
+        private Session _session;
 
         [Test]
         public void Should_throw_concurrency_exception_from_repository()

@@ -6,8 +6,8 @@ namespace CQRSlite.Infrastructure
 {
     internal class PrivateReflectionDynamicObject : DynamicObject
     {
-        public object RealObject { get; set; }
         private const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        public object RealObject { get; set; }
 
         internal static object WrapObjectIfNeeded(object o)
         {
@@ -17,7 +17,7 @@ namespace CQRSlite.Infrastructure
                 return o;
             }
 
-            return new PrivateReflectionDynamicObject { RealObject = o };
+            return new PrivateReflectionDynamicObject {RealObject = o};
         }
 
         // Called when a method is called

@@ -11,13 +11,13 @@ namespace CQRSlite.Tests.Substitutes
 
         public void RegisterHandler<T>(Action<T> handler) where T : IMessage
         {
-            HandlerList.Add(new TestHandlerListItem {Type = typeof(T),Handler = handler});
+            HandlerList.Add(new TestHandlerListItem {Type = typeof(T), Handler = handler});
         }
     }
 
     public class TestHandlerListItem
     {
-        public Type Type;
         public dynamic Handler;
+        public Type Type;
     }
 }

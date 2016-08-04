@@ -1,19 +1,19 @@
-﻿using CQRSlite.Domain;
-using CQRSlite.Events;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Runtime.Caching;
+using CQRSlite.Domain;
+using CQRSlite.Events;
 
 namespace CQRSlite.Cache
 {
     public class CacheRepository : IRepository
     {
-        private readonly IRepository _repository;
-        private readonly IEventStore _eventStore;
-        private readonly MemoryCache _cache;
-        private readonly Func<CacheItemPolicy> _policyFactory;
         private static readonly ConcurrentDictionary<string, object> _locks = new ConcurrentDictionary<string, object>();
+        private readonly MemoryCache _cache;
+        private readonly IEventStore _eventStore;
+        private readonly Func<CacheItemPolicy> _policyFactory;
+        private readonly IRepository _repository;
 
         public CacheRepository(IRepository repository, IEventStore eventStore)
         {
@@ -74,7 +74,7 @@ namespace CQRSlite.Cache
                     T aggregate;
                     if (IsTracked(aggregateId))
                     {
-                        aggregate = (T)_cache.Get(idstring);
+                        aggregate = (T) _cache.Get(idstring);
                         var events = _eventStore.Get(aggregateId, aggregate.Version);
                         if (events.Any() && events.First().Version != aggregate.Version + 1)
                         {

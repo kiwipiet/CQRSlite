@@ -14,6 +14,7 @@ namespace CQRSTests.WriteModel
     public class When_item_checked_in : Specification<InventoryItem, InventoryCommandHandlers, CheckInItemsToInventory>
     {
         private Guid _guid;
+
         protected override InventoryCommandHandlers BuildHandler()
         {
             return new InventoryCommandHandlers(Session);
@@ -22,7 +23,11 @@ namespace CQRSTests.WriteModel
         protected override IEnumerable<IEvent> Given()
         {
             _guid = Guid.NewGuid();
-            return new List<IEvent> { new InventoryItemCreated(_guid, "Jadda"){Version = 1}, new ItemsCheckedInToInventory(_guid, 2){Version = 2} };
+            return new List<IEvent>
+            {
+                new InventoryItemCreated(_guid, "Jadda") {Version = 1},
+                new ItemsCheckedInToInventory(_guid, 2) {Version = 2}
+            };
         }
 
         protected override CheckInItemsToInventory When()

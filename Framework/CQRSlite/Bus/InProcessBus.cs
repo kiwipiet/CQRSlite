@@ -1,25 +1,15 @@
-﻿using CQRSlite.Commands;
+﻿using System;
+using System.Collections.Generic;
+using CQRSlite.Commands;
 using CQRSlite.Events;
 using CQRSlite.Messages;
-using System;
-using System.Collections.Generic;
 
 namespace CQRSlite.Bus
 {
     public class InProcessBus : ICommandSender, IEventPublisher, IHandlerRegistrar
     {
-        private readonly Dictionary<Type, List<Action<IMessage>>> _routes = new Dictionary<Type, List<Action<IMessage>>>();
-
-        public void RegisterHandler<T>(Action<T> handler) where T : IMessage
-        {
-            List<Action<IMessage>> handlers;
-            if (!_routes.TryGetValue(typeof(T), out handlers))
-            {
-                handlers = new List<Action<IMessage>>();
-                _routes.Add(typeof(T), handlers);
-            }
-            handlers.Add((x => handler((T)x)));
-        }
+        private readonly Dictionary<Type, List<Action<IMessage>>> _routes =
+            new Dictionary<Type, List<Action<IMessage>>>();
 
         public void Send<T>(T command) where T : ICommand
         {
@@ -50,6 +40,17 @@ namespace CQRSlite.Bus
             {
                 handler(@event);
             }
+        }
+
+        public void RegisterHandler<T>(Action<T> handler) where T : IMessage
+        {
+            List<Action<IMessage>> handlers;
+            if (!_routes.TryGetValue(typeof(T), out handlers))
+            {
+                handlers = new List<Action<IMessage>>();
+                _routes.Add(typeof(T), handlers);
+            }
+            handlers.Add(x => handler((T) x));
         }
     }
 }

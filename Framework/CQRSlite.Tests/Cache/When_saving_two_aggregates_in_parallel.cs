@@ -11,10 +11,10 @@ namespace CQRSlite.Tests.Cache
 {
     public class When_saving_two_aggregates_in_parallel
     {
-        private CacheRepository _rep1;
         private TestAggregate _aggregate1;
-        private TestInMemoryEventStore _testStore;
         private TestAggregate _aggregate2;
+        private CacheRepository _rep1;
+        private TestInMemoryEventStore _testStore;
 
         [SetUp]
         public void Setup()
@@ -34,24 +34,24 @@ namespace CQRSlite.Tests.Cache
             _rep1.Save(_aggregate2);
 
             var t1 = new Task(() =>
-                                  {
-                                      for (var i = 0; i < 100; i++)
-                                      {
-                                          var aggregate = _rep1.Get<TestAggregate>(_aggregate1.Id);
-                                          aggregate.DoSomething();
-                                          _rep1.Save(aggregate);
-                                      }
-                                  });
+            {
+                for (var i = 0; i < 100; i++)
+                {
+                    var aggregate = _rep1.Get<TestAggregate>(_aggregate1.Id);
+                    aggregate.DoSomething();
+                    _rep1.Save(aggregate);
+                }
+            });
 
             var t2 = new Task(() =>
-                                  {
-                                      for (var i = 0; i < 100; i++)
-                                      {
-                                          var aggregate = _rep1.Get<TestAggregate>(_aggregate2.Id);
-                                          aggregate.DoSomething();
-                                          _rep1.Save(aggregate);
-                                      }
-                                  });
+            {
+                for (var i = 0; i < 100; i++)
+                {
+                    var aggregate = _rep1.Get<TestAggregate>(_aggregate2.Id);
+                    aggregate.DoSomething();
+                    _rep1.Save(aggregate);
+                }
+            });
             t1.Start();
             t2.Start();
 
@@ -67,7 +67,7 @@ namespace CQRSlite.Tests.Cache
         [Test]
         public void Should_save_all_events()
         {
-            Assert.That(_testStore.Events.Count(), Is.EqualTo(202));
+            Assert.That(_testStore.Events.Count, Is.EqualTo(202));
         }
 
         [Test]

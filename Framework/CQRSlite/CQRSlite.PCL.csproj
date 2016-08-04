@@ -37,6 +37,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bus\IAsyncHandlerRegistrar.cs" />
     <Compile Include="Bus\IHandlerRegistrar.cs" />
     <Compile Include="Bus\InProcessBus.cs" />
     <Compile Include="Commands\IAsyncCommandHandler.cs" />

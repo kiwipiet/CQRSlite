@@ -7,10 +7,10 @@
 @using (Html.BeginForm())
 {
     <p>
-        @Html.Hidden("Id",Model.Id)
-        @Html.Hidden("Version",Model.Version)
-        Number: @Html.TextBox("Number")<br />
-        <button name="submit">Submit</button>         
+        @Html.Hidden("Id", Model.Id)
+        @Html.Hidden("Version", Model.Version)
+        Number: @Html.TextBox("Number")<br/>
+        <button name="submit">Submit</button>
         <a href="/">Back</a>
     </p>
 }
