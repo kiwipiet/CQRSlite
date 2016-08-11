@@ -25,7 +25,7 @@ namespace CQRSlite.Domain
         {
             if (expectedVersion != null)
             {
-                var x = await _eventStore.GetAsync(aggregate.Id, expectedVersion.Value);
+                var x = await _eventStore.GetAsync(aggregate.Id, expectedVersion.Value).ConfigureAwait(false);
                 if (x.Any())
                 {
                     throw new ConcurrencyException(aggregate.Id);
@@ -33,13 +33,13 @@ namespace CQRSlite.Domain
             }
 
             var changes = aggregate.FlushUncommitedChanges();
-            await _eventStore.SaveAsync(changes);
+            await _eventStore.SaveAsync(changes).ConfigureAwait(false);
             return aggregate;
         }
 
         public async Task<T> GetAsync<T>(Guid aggregateId) where T : AggregateRoot
         {
-            var eventsTask = await _eventStore.GetAsync(aggregateId, -1);
+            var eventsTask = await _eventStore.GetAsync(aggregateId, -1).ConfigureAwait(false);
             var events = eventsTask.ToList();
             if (!events.Any())
             {
