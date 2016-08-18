@@ -30,7 +30,8 @@ namespace CQRSlite.Domain
             }
             else if (_trackedAggregates[aggregate.Id].Aggregate != aggregate)
             {
-                throw new ConcurrencyException(aggregate.Id);
+                // TODO : Different Exception?
+                throw new ConcurrencyException(aggregate.Id, -1);
             }
             return Task.FromResult(aggregate);
         }
@@ -42,7 +43,7 @@ namespace CQRSlite.Domain
                 var trackedAggregate = (T) _trackedAggregates[id].Aggregate;
                 if (expectedVersion != null && trackedAggregate.Version != expectedVersion)
                 {
-                    throw new ConcurrencyException(trackedAggregate.Id);
+                    throw new ConcurrencyException(trackedAggregate.Id, expectedVersion.GetValueOrDefault(-1), trackedAggregate.Version);
                 }
                 return trackedAggregate;
             }
@@ -50,7 +51,7 @@ namespace CQRSlite.Domain
             var aggregate = await _repository.GetAsync<T>(id).ConfigureAwait(false);
             if (expectedVersion != null && aggregate.Version != expectedVersion)
             {
-                throw new ConcurrencyException(id);
+                throw new ConcurrencyException(aggregate.Id, expectedVersion.GetValueOrDefault(-1), aggregate.Version);
             }
             return await AddAsync(aggregate).ConfigureAwait(false);
         }

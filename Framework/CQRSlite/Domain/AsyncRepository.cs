@@ -28,7 +28,7 @@ namespace CQRSlite.Domain
                 var x = await _eventStore.GetAsync(aggregate.Id, expectedVersion.Value).ConfigureAwait(false);
                 if (x.Any())
                 {
-                    throw new ConcurrencyException(aggregate.Id);
+                    throw new ConcurrencyException(aggregate.Id, expectedVersion.Value);
                 }
             }
 

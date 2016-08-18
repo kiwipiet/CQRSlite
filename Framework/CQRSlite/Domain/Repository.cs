@@ -24,7 +24,7 @@ namespace CQRSlite.Domain
         {
             if (expectedVersion != null && _eventStore.Get(aggregate.Id, expectedVersion.Value).Any())
             {
-                throw new ConcurrencyException(aggregate.Id);
+                throw new ConcurrencyException(aggregate.Id, expectedVersion.Value);
             }
 
             var changes = aggregate.FlushUncommitedChanges();
